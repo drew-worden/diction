@@ -1,10 +1,13 @@
 // Import packages
-import express, { Request, Response } from "express"
+import cors from "cors"
 import dotenv from "dotenv"
 import morgan from "morgan"
-import compression from "compression"
-import cors from "cors"
+import express from "express"
 import mongoose from "mongoose"
+import compression from "compression"
+
+// Import routes
+import authRouter from "./routes/auth-router"
 
 // Import utilities
 import logger from "./utilities/logger"
@@ -19,7 +22,9 @@ const server = express()
 
 //Set stream for logger
 const stream = {
-	write: (message: string) => logger.http(message)
+	write: (message: string) => {
+		logger.http(message.substring(0, message.lastIndexOf("\n")))
+	}
 }
 
 // Middleware
@@ -29,15 +34,12 @@ server.use(compression())
 server.use(cors())
 server.use(
 	morgan(":remote-addr :method :url :status :res[content-length] - :response-time ms", {
-		stream,
-		skip: () => false
+		stream
 	})
 )
 
 // Routes
-server.get("/", (req: Request, res: Response) => {
-	res.send("Welcome to Express & TypeScript Server")
-})
+server.use("/api/auth", authRouter)
 
 // Check for MongoDB URI and connect to database
 if (!mongodbUri) {
