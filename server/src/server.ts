@@ -2,15 +2,17 @@
 import cors from "cors"
 import dotenv from "dotenv"
 import morgan from "morgan"
-import express from "express"
+import express, { Request, Response, NextFunction } from "express"
 import mongoose from "mongoose"
 import compression from "compression"
+import { ExpressJoiError } from "express-joi-validation"
 
 // Import routes
 import authRouter from "./routes/auth-router"
 
 // Import utilities
 import logger from "./utilities/logger"
+import { formatValidationError } from "./utilities/format"
 
 // Load environment variables
 dotenv.config()
@@ -40,6 +42,21 @@ server.use(
 
 // Routes
 server.use("/api/auth", authRouter)
+
+// Handle validation errors
+/* eslint-disable */
+server.use((err: ExpressJoiError, req: Request, res: Response, next: NextFunction) => {
+	/* eslint-enable */
+	if (err && err.error && err.type) {
+		const e: ExpressJoiError = err
+		return res.status(400).json(formatValidationError(e))
+	} else {
+		return res.status(500).json({
+			type: "body",
+			messages: ["improperly formatted request body"]
+		})
+	}
+})
 
 // Check for MongoDB URI and connect to database
 if (!mongodbUri) {
