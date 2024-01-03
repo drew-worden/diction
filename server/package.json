@@ -1,42 +1,49 @@
 {
-  "name": "server",
-  "author": {
-    "name": "Drew Worden",
-    "email": "drew.p.worden@gmail.com",
-    "url": "https://drew.zip"
-  },
-  "description": "An Express server to communicate with the Diction SvelteKit client.",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/drew-worden/diction/tree/main/server"
-  },
-  "license": "MIT",
-  "private": true,
-  "scripts": {
-    "start": "node build/server.js",
-    "dev": "nodemon src/server.ts",
-    "build": "npx tsc"
-  },
-  "dependencies": {
-    "bcrypt": "^5.1.1",
-    "compression": "^1.7.4",
-    "cors": "^2.8.5",
-    "dotenv": "^16.3.1",
-    "express": "^4.18.2",
-    "express-joi-validation": "^5.0.1",
-    "joi": "^17.11.0",
-    "jsonwebtoken": "^9.0.2",
-    "mongoose": "^8.0.3",
-    "morgan": "^1.10.0",
-    "winston": "^3.11.0"
-  },
-  "devDependencies": {
-    "@types/compression": "^1.7.5",
-    "@types/cors": "^2.8.17",
-    "@types/express": "^4.17.21",
-    "@types/morgan": "^1.9.9",
-    "nodemon": "^3.0.2",
-    "ts-node-dev": "^2.0.0",
-    "typescript": "^5.3.3"
-  }
+	"name": "server",
+	"author": {
+		"name": "Drew Worden",
+		"email": "drew.p.worden@gmail.com",
+		"url": "https://drew.zip"
+	},
+	"description": "An Express server to communicate with the Diction SvelteKit client.",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/drew-worden/diction/tree/main/server"
+	},
+	"license": "MIT",
+	"private": true,
+	"scripts": {
+		"start": "node build/server.js",
+		"dev": "nodemon src/server.ts",
+		"build": "npx tsc",
+		"lint": "eslint .",
+		"format": "prettier --write ."
+	},
+	"dependencies": {
+		"bcrypt": "^5.1.1",
+		"compression": "^1.7.4",
+		"cors": "^2.8.5",
+		"dotenv": "^16.3.1",
+		"express": "^4.18.2",
+		"express-joi-validation": "^5.0.1",
+		"joi": "^17.11.0",
+		"jsonwebtoken": "^9.0.2",
+		"mongoose": "^8.0.3",
+		"morgan": "^1.10.0",
+		"winston": "^3.11.0"
+	},
+	"devDependencies": {
+		"@types/compression": "^1.7.5",
+		"@types/cors": "^2.8.17",
+		"@types/express": "^4.17.21",
+		"@types/morgan": "^1.9.9",
+		"@typescript-eslint/eslint-plugin": "^6.17.0",
+		"@typescript-eslint/parser": "^6.17.0",
+		"eslint": "^8.56.0",
+		"eslint-config-prettier": "^9.1.0",
+		"nodemon": "^3.0.2",
+		"prettier": "^3.1.1",
+		"ts-node-dev": "^2.0.0",
+		"typescript": "^5.3.3"
+	}
 }

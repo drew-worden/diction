@@ -13,6 +13,22 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "format-client": "cd ./client && npm run format",
+    "format-server": "cd ./server && npm run format",
+    "format": "npm run format-client && npm run format-server",
+    "lint-client": "cd ./client && npm run lint",
+    "lint-server": "cd ./server && npm run lint",
+    "lint": "npm run lint-client && npm run lint-server",
+    "build-client": "cd ./client && npm run build",
+    "build-server": "cd ./server && npm run build",
+    "build": "npm run build-client && npm run build-server",
+    "dev-client": "cd ./client && npm run dev",
+    "dev-server": "cd ./server && npm run dev",
+    "start-client": "cd ./client && npm start",
+    "start-server": "cd ./server && npm start",
+    "prepare": "husky install"
+  },
+  "devDependencies": {
+    "husky": "^8.0.3"
   }
 }
