@@ -14,6 +14,8 @@ const usernameValidation = Joi.string().min(1).max(16).required().messages({
 	"string.max": "{#label} field should have a maximum length of {#limit}"
 })
 const passwordValidation = JoiPassword.string()
+	.min(8)
+	.max(32)
 	.minOfSpecialCharacters(1)
 	.minOfLowercase(1)
 	.minOfUppercase(1)
@@ -25,6 +27,8 @@ const passwordValidation = JoiPassword.string()
 		"any.required": "{#label} field is required",
 		"string.base": "{#label} field should be a string",
 		"string.empty": "{#label} field should not be empty",
+		"string.min": "{#label} field should have a minimum length of {#limit}",
+		"string.max": "{#label} field should have a maximum length of {#limit}",
 		"password.minOfUppercase":
 			"{#label} field should contain at least {#min} uppercase character",
 		"password.minOfSpecialCharacters":
