@@ -17,7 +17,8 @@ function formatValidationError(error: ExpressJoiError) {
 
 	const formattedError: FormattedValidationError = {
 		type: error.type,
-		messages: errorMessages
+		messages: errorMessages,
+		timestamp: new Date().toISOString()
 	}
 
 	return formattedError

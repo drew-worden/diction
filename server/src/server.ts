@@ -53,7 +53,8 @@ server.use((err: ExpressJoiError, req: Request, res: Response, next: NextFunctio
 	} else {
 		return res.status(500).json({
 			type: "body",
-			messages: ["improperly formatted request body"]
+			messages: ["improperly formatted request body"],
+			timestamp: new Date().toISOString()
 		})
 	}
 })

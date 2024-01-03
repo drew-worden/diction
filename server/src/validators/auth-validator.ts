@@ -13,7 +13,7 @@ const usernameValidation = Joi.string().min(1).max(16).required().messages({
 	"string.min": "{#label} field should have a minimum length of {#limit}",
 	"string.max": "{#label} field should have a maximum length of {#limit}"
 })
-const passwordValidation = JoiPassword.string()
+const registerPasswordValidation = JoiPassword.string()
 	.min(8)
 	.max(32)
 	.minOfSpecialCharacters(1)
@@ -39,6 +39,11 @@ const passwordValidation = JoiPassword.string()
 		"password.noWhiteSpaces": "{#label} field should not contain white spaces",
 		"password.onlyLatinCharacters": "{#label} field should contain only latin characters"
 	})
+const loginPasswordValidation = JoiPassword.string().required().messages({
+	"any.required": "{#label} field is required",
+	"string.base": "{#label} field should be a string",
+	"string.empty": "{#label} field should not be empty"
+})
 const emailValidation = Joi.string().email().required().messages({
 	"any.required": "{#label} field is required",
 	"string.base": "{#label} field should be a string",
@@ -50,12 +55,12 @@ const emailValidation = Joi.string().email().required().messages({
 const registerSchema = Joi.object({
 	username: usernameValidation,
 	email: emailValidation,
-	password: passwordValidation
+	password: registerPasswordValidation
 })
 
 const loginSchema = Joi.object({
 	email: emailValidation,
-	password: passwordValidation
+	password: loginPasswordValidation
 })
 
 // Exports

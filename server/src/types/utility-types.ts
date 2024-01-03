@@ -4,7 +4,8 @@ import { ExpressJoiError } from "express-joi-validation"
 // Interfaces
 interface FormattedValidationError {
 	type: ExpressJoiError["type"]
-	messages: string[]
+	messages: string[],
+	timestamp: string
 }
 
 // Exports
