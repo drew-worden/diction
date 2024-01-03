@@ -6,6 +6,10 @@
 		"url": "https://drew.zip"
 	},
 	"description": "A SvelteKit client to communicate with the Diction Express server.",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/drew-worden/diction/tree/main/client"
+	},
 	"license": "MIT",
 	"type": "module",
 	"private": true,
