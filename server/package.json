@@ -1,0 +1,14 @@
+{
+  "name": "server",
+  "author": {
+    "name": "Drew Worden",
+    "email": "drew.p.worden@gmail.com",
+    "url": "https://drew.zip"
+  },
+  "description": "An Express server to communicate with the Diction SvelteKit client.",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
