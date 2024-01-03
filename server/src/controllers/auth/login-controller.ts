@@ -1,13 +1,16 @@
 // Import packages
 import { Request, Response } from "express"
 import bcrypt from "bcrypt"
-// import jwt from "jsonwebtoken"
+import jwt from "jsonwebtoken"
 
 // Import models
 import User from "../../models/user-model"
 
 // Import utilities
 import logger from "../../utilities/logger"
+
+// Get environment variables
+import { env } from "../../server"
 
 // Login controller
 async function loginController(req: Request, res: Response) {
@@ -34,7 +37,16 @@ async function loginController(req: Request, res: Response) {
 		}
 
 		// Create JWT token
-		const token = "JWT_TOKEN"
+		const token = jwt.sign(
+			{
+				userId: user._id,
+				email: user.email
+			},
+			env.JWT_SECRET as string,
+			{
+				expiresIn: "24h"
+			}
+		)
 
 		// Send response
 		logger.info(`User logged in: ${user.email}.`)

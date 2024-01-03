@@ -1,6 +1,5 @@
 // Import packages
 import cors from "cors"
-import dotenv from "dotenv"
 import morgan from "morgan"
 import express, { Request, Response, NextFunction } from "express"
 import mongoose from "mongoose"
@@ -13,11 +12,18 @@ import authRouter from "./routes/auth-router"
 // Import utilities
 import logger from "./utilities/logger"
 import { formatValidationError } from "./utilities/format"
+import { loadEnv } from "./utilities/env"
+
+// Import types
+import { Env } from "./types/utility-types"
 
 // Load environment variables
-dotenv.config()
-const port = process.env.PORT || 3000
-const mongodbUri = process.env.MONGODB_URI
+let env: Env
+try {
+	env = loadEnv()
+} catch (error) {
+	throw new Error(error as string)
+}
 
 // Initialize Express server
 const server = express()
@@ -59,22 +65,21 @@ server.use((err: ExpressJoiError, req: Request, res: Response, next: NextFunctio
 	}
 })
 
-// Check for MongoDB URI and connect to database
-if (!mongodbUri) {
-	logger.error("No MongoDB URI provided. Please add MONGODB_URI variable to .env file.")
-} else {
-	mongoose
-		.connect(mongodbUri)
-		.then(() => {
-			logger.info("Successfully connected to MongoDB database.")
+// Connect to database
+mongoose
+	.connect(env.MONGODB_URI)
+	.then(() => {
+		logger.info("Successfully connected to MongoDB database.")
 
-			//Start server listening on port on successful connection to database
-			server.listen(port, () => {
-				logger.info(`Server successfully started up on port ${port}.`)
-			})
+		//Start server listening on port on successful connection to database
+		server.listen(env.PORT, () => {
+			logger.info(`Server successfully started up on port ${env.PORT}.`)
 		})
-		.catch((error) => {
-			// Log error if connection to database fails
-			logger.error(error)
-		})
-}
+	})
+	.catch((error) => {
+		// Log error if connection to database fails
+		logger.error(error)
+	})
+
+// Exports
+export { env }

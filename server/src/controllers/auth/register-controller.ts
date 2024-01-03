@@ -1,13 +1,16 @@
 // Import packages
 import { Request, Response } from "express"
 import bcrypt from "bcrypt"
-// import jwt from "jsonwebtoken"
+import jwt from "jsonwebtoken"
 
 // Import models
 import User from "../../models/user-model"
 
 // Import utilities
 import logger from "../../utilities/logger"
+
+// Get environment variables
+import { env } from "../../server"
 
 // Register controller
 async function registerController(req: Request, res: Response) {
@@ -16,7 +19,7 @@ async function registerController(req: Request, res: Response) {
 		const { username, email, password } = req.body
 
 		// Check if user exists
-		const userExists = await User.exists({ email, username })
+		const userExists = await User.exists({ $or: [{ username: username }, { email: email }] })
 		if (userExists) {
 			logger.warn(`User already exists: ${email}.`)
 			return res
@@ -35,7 +38,16 @@ async function registerController(req: Request, res: Response) {
 		})
 
 		// Create JWT token
-		const token = "JWT_TOKEN"
+		const token = jwt.sign(
+			{
+				userId: newUser._id,
+				email: newUser.email
+			},
+			env.JWT_SECRET as string,
+			{
+				expiresIn: "24h"
+			}
+		)
 
 		// Send response
 		logger.info(`User created: ${newUser.email}.`)
