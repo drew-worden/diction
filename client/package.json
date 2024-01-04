@@ -20,6 +20,9 @@
 		"lint": "prettier --check . && eslint .",
 		"format": "prettier --write ."
 	},
+	"dependencies": {
+		"axios": "^1.6.4"
+	},
 	"devDependencies": {
 		"@sveltejs/adapter-node": "^2.0.2",
 		"@sveltejs/kit": "^2.0.0",

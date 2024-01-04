@@ -6,6 +6,7 @@ import { FormattedValidationError } from "../types/utility-types"
 
 // Format validation error
 function formatValidationError(error: ExpressJoiError) {
+	// Check for error details, replace quotes, and push to array
 	const errorMessages: string[] = []
 	if (error.error?.details) {
 		error.error.details.forEach((detail) => {
@@ -15,6 +16,7 @@ function formatValidationError(error: ExpressJoiError) {
 		errorMessages.push("improperly formatted request body")
 	}
 
+	// Create formatted error object
 	const formattedError: FormattedValidationError = {
 		type: error.type,
 		messages: errorMessages,

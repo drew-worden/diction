@@ -1,0 +1,49 @@
+@font-face {
+	font-family: geist;
+	src: url("../assets/fonts/geist.woff2") format("woff2");
+	font-weight: 100 900;
+}
+
+@font-face {
+	font-family: rubik-shadow;
+	src: url("../assets/fonts/rubik-shadow.ttf") format("truetype");
+}
+
+@font-face {
+	font-family: grand;
+	src: url("../assets/fonts/grand.ttf") format("truetype");
+	font-weight: 100 900;
+}
+
+* {
+	margin: 0;
+	outline: 0;
+	border: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+/* Basic Element Styling */
+body {
+	background: linear-gradient(0deg, #eafafc, #b1c0cd);
+	width: 100vw;
+	height: 100vh;
+	display: flex;
+}
+
+.clickable {
+	cursor: pointer;
+	transition: all 0.1s ease-in-out;
+}
+
+.clickable:hover {
+	transform: scale(1.05);
+}
+
+.clickable:active {
+	transform: scale(0.95);
+}
+
+button {
+	background-color: inherit;
+}

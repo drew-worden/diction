@@ -8,6 +8,7 @@ import { Env } from "../types/utility-types"
 dotenv.config()
 
 function loadEnv() {
+	// Specify required environment variables
 	const loadedEnvKeys = Object.keys(process.env)
 	const requiredEnv = ["PORT", "MONGODB_URI", "JWT_SECRET"]
 	const env: Env = {
@@ -16,6 +17,7 @@ function loadEnv() {
 		JWT_SECRET: ""
 	}
 
+	// Check if required environment variables are present
 	requiredEnv.forEach((envKey) => {
 		if (!loadedEnvKeys.includes(envKey)) {
 			throw new Error(

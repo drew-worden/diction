@@ -4,7 +4,7 @@ import { JwtPayload } from "jsonwebtoken"
 
 // Interfaces
 interface RequestWithUser extends Request {
-	user? : string | JwtPayload
+	user?: string | JwtPayload
 }
 
 // Exports
