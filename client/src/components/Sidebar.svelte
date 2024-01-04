@@ -1,10 +1,12 @@
 <div class="container">
 	<span class="title">Diction</span>
-	<img
-		class="logo"
-		src="/favicon.png"
-		alt="diction logo"
-	/>
+	<a href="/">
+		<img
+			class="logo clickable"
+			src="/favicon.png"
+			alt="diction logo"
+		/>
+	</a>
 </div>
 
 <style>

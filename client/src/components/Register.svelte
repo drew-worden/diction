@@ -1,3 +1,0 @@
-<form>
-	<span></span>
-</form>

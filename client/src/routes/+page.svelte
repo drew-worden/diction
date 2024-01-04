@@ -1,10 +1,37 @@
+<script lang="ts">
+	// Import components
+	import LoginForm from "../components/LoginForm.svelte";
+	import RegisterForm from "../components/RegisterForm.svelte";
+
+	// State
+	let showLoginForm = false;
+	let showRegisterForm = false;
+
+	// Handlers
+	function handleForm(form: "login" | "register") {
+		if (form === "login") {
+			showLoginForm = true;
+			showRegisterForm = false;
+		} else if (form === "register") {
+			showLoginForm = false;
+			showRegisterForm = true;
+		}
+	}
+</script>
+
 <div class="container">
-	<h1 class="title">Diction</h1>
-	<p class="subtitle">A Discord clone constructed for educational purposes.</p>
-	<div class="button-container">
-		<button class="login-button clickable">Login</button>
-		<button class="register-button clickable">Register</button>
-	</div>
+	{#if showLoginForm}
+		<LoginForm handleForm={handleForm}/>
+	{:else if showRegisterForm}
+		<RegisterForm handleForm={handleForm}/>
+	{:else}
+			<h1 class="title">Diction</h1>
+			<p class="subtitle">A Discord clone constructed for educational purposes.</p>
+			<div class="button-container">
+				<button class="login-button clickable main-button" on:click="{() => showLoginForm = true}">Login</button>
+				<button class="register-button clickable main-button" on:click="{() => showRegisterForm = true}">Register</button>
+			</div>
+	{/if}
 </div>
 
 <style>
@@ -19,6 +46,7 @@
 		background-size: cover;
 		background-repeat: no-repeat;
 		background-position: 0px 20px;
+		box-shadow: inset 0px 0px 61px 37px rgba(0,0,0,0.1);
 	}
 
 	.title {
@@ -35,11 +63,11 @@
 		font-family: grand;
 		font-size: 20px;
 		font-weight: 500;
-		margin-bottom: 3rem;
+		margin-bottom: 2rem;
 		color: #333333;
 	}
 
-	button {
+	.main-button {
 		font-family: grand;
 		font-size: 16px;
 		font-weight: 500;
@@ -52,11 +80,17 @@
 			rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
 	}
 
+	.button-container {
+		display: flex;
+		gap: 16px;
+		align-items: center;
+	}
+
 	.login-button {
 		background-color: #3793f6;
 		color: #ffffff;
-		border: none;
-		margin-right: 1rem;
+		margin: 8px 0px;
+		border: 1px solid #3793f6;
 	}
 
 	.register-button {
