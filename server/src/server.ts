@@ -14,8 +14,12 @@ import logger from "./utilities/logger"
 import { formatValidationError } from "./utilities/format"
 import { loadEnv } from "./utilities/env"
 
+// Import middleware
+import { verifyToken } from "./middleware/auth-middleware"
+
 // Import types
 import { Env } from "./types/utility-types"
+import { RequestWithUser } from "./types/middleware-types"
 
 // Load environment variables
 let env: Env
@@ -48,6 +52,15 @@ server.use(
 
 // Routes
 server.use("/api/auth", authRouter)
+
+// Test route
+server.get("/test", verifyToken, (req: RequestWithUser, res: Response) => {
+	res.status(200).json({
+		user: req.user,
+		message: "success",
+		timestamp: new Date().toISOString()
+	})
+})
 
 // Handle validation errors
 /* eslint-disable */
