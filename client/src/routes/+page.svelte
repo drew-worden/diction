@@ -1,36 +1,50 @@
 <script lang="ts">
+	// Import libraries
+	import {send, receive} from "../lib/index"
+
 	// Import components
-	import LoginForm from "../components/LoginForm.svelte";
-	import RegisterForm from "../components/RegisterForm.svelte";
+	import LoginForm from "../components/LoginForm.svelte"
+	import RegisterForm from "../components/RegisterForm.svelte"
 
 	// State
-	let showLoginForm = false;
-	let showRegisterForm = false;
+	let showLoginForm = false
+	let showRegisterForm = false
 
 	// Handlers
-	function handleForm(form: "login" | "register") {
+	function handleForm(form: "login" | "register" | "home") {
 		if (form === "login") {
-			showLoginForm = true;
-			showRegisterForm = false;
+			showLoginForm = true
+			showRegisterForm = false
 		} else if (form === "register") {
-			showLoginForm = false;
-			showRegisterForm = true;
+			showLoginForm = false
+			showRegisterForm = true
+		} else {
+			showLoginForm = false
+			showRegisterForm = false
 		}
 	}
 </script>
 
 <div class="container">
 	{#if showLoginForm}
-		<LoginForm handleForm={handleForm}/>
+		<LoginForm {handleForm} />
 	{:else if showRegisterForm}
-		<RegisterForm handleForm={handleForm}/>
+		<RegisterForm {handleForm} />
 	{:else}
+		<div class="home-container" in:receive={{ key: "block" }} out:send={{ key: "block" }}>
 			<h1 class="title">Diction</h1>
 			<p class="subtitle">A Discord clone constructed for educational purposes.</p>
 			<div class="button-container">
-				<button class="login-button clickable main-button" on:click="{() => showLoginForm = true}">Login</button>
-				<button class="register-button clickable main-button" on:click="{() => showRegisterForm = true}">Register</button>
-			</div>
+				<button
+					class="login-button clickable main-button"
+					on:click="{() => (showLoginForm = true)}">Login</button
+				>
+				<button
+					class="register-button clickable main-button"
+					on:click="{() => (showRegisterForm = true)}">Register</button
+				>
+				</div>
+		</div>
 	{/if}
 </div>
 
@@ -41,12 +55,20 @@
 		flex-direction: column;
 		align-items: center;
 		justify-content: center;
+		position: relative;
 		height: 100%;
 		background-image: url("/wave.svg");
 		background-size: cover;
 		background-repeat: no-repeat;
 		background-position: 0px 20px;
-		box-shadow: inset 0px 0px 61px 37px rgba(0,0,0,0.1);
+		box-shadow: inset 0px 0px 61px 37px rgba(0, 0, 0, 0.1);
+	}
+
+	.home-container {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		position: absolute;
 	}
 
 	.title {
