@@ -1,6 +1,6 @@
 <script lang="ts">
 	// Import libraries
-	import {send, receive} from "../lib/index"
+	import { send, receive } from "../lib/index"
 
 	// Import components
 	import LoginForm from "../components/LoginForm.svelte"
@@ -31,7 +31,11 @@
 	{:else if showRegisterForm}
 		<RegisterForm {handleForm} />
 	{:else}
-		<div class="home-container" in:receive={{ key: "block" }} out:send={{ key: "block" }}>
+		<div
+			class="home-container"
+			in:receive="{{ key: 'block' }}"
+			out:send="{{ key: 'block' }}"
+		>
 			<h1 class="title">Diction</h1>
 			<p class="subtitle">A Discord clone constructed for educational purposes.</p>
 			<div class="button-container">
@@ -43,7 +47,7 @@
 					class="register-button clickable main-button"
 					on:click="{() => (showRegisterForm = true)}">Register</button
 				>
-				</div>
+			</div>
 		</div>
 	{/if}
 </div>

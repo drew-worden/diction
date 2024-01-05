@@ -16,7 +16,7 @@ import { env } from "../../server"
 async function registerController(req: Request, res: Response) {
 	try {
 		// Get data from request body
-		const { username, email, password } = req.body
+		const { firstName, lastName, username, email, password } = req.body
 
 		// Check if user exists
 		const userExists = await User.exists({ $or: [{ username: username }, { email: email }] })
@@ -32,8 +32,10 @@ async function registerController(req: Request, res: Response) {
 
 		// Create user
 		const newUser = await User.create({
-			username: username,
-			email: email,
+			firstName,
+			lastName,
+			username,
+			email,
 			password: hashedPassword
 		})
 
@@ -54,6 +56,8 @@ async function registerController(req: Request, res: Response) {
 		return res.status(201).json({
 			message: "user created",
 			user: {
+				firstName: newUser.firstName,
+				lastName: newUser.lastName,
 				username: newUser.username,
 				email: newUser.email,
 				createdAt: newUser.createdAt,
