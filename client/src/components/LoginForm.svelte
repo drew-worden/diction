@@ -1,9 +1,49 @@
 <script lang="ts">
+	// Import packages
+	import toast from "svelte-french-toast"
+
 	// Import libraries
 	import { send, receive } from "../lib/index"
+	import { validateLoginForm } from "../lib/validators"
+	import type { ValidatorFields } from "../types/validators"
+
+	// Import types
 
 	// Props
 	export let handleForm: (form: "login" | "register" | "home") => void
+
+	// State
+	let email = ""
+	let password = ""
+	let toastId = ""
+	let disableButton = true
+	let errorField: ValidatorFields = null
+
+	let previousState = email + password
+
+	$: if (previousState !== email + password) {
+		disableButton = false
+	} else {
+		disableButton = true
+	}
+
+	// Handlers
+	function handleSubmit() {
+		errorField = null
+		const { valid, message, field } = validateLoginForm(email, password)
+		if (!valid) {
+			previousState = email + password
+			toast.dismiss(toastId)
+			toastId = toast.error(message, {
+				position: "bottom-center",
+				style: "margin-left: 320px; margin-bottom: 225px; font-family: grand; color: #333333; border-radius: 1000px; padding: 8px 16px; box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;"
+			})
+			if (field) {
+				errorField = field
+			}
+			return
+		}
+	}
 </script>
 
 <div
@@ -13,7 +53,10 @@
 >
 	<button
 		class="exit-wrapper clickable"
-		on:click="{() => handleForm('home')}"
+		on:click="{() => {
+			toast.dismiss(toastId)
+			handleForm('home')
+		}}"
 	>
 		<svg
 			width="16"
@@ -33,16 +76,27 @@
 	<input
 		type="text"
 		placeholder="Email Address"
+		bind:value="{email}"
+		style:outline="{errorField === "email" ? "solid 2px #FF4B4B" : null}"
 	/>
 	<input
 		type="password"
 		placeholder="Password"
+		bind:value="{password}"
+		style:outline="{errorField === "password" ? "solid 2px #FF4B4B" : null}"
 	/>
-	<button class="login-button main-button clickable">Login</button>
+	<button
+		class="login-button main-button clickable"
+		on:click="{() => handleSubmit()}"
+		disabled="{disableButton}">Login</button
+	>
 	<span class="question"
 		>Don't have an account? <button
 			class="side-button clickable"
-			on:click="{() => handleForm('register')}">Register</button
+			on:click="{() => {
+				toast.dismiss(toastId)
+				handleForm('register')
+			}}">Register</button
 		></span
 	>
 </div>
@@ -59,6 +113,13 @@
 			rgba(0, 0, 0, 0.4) 0px 2px 4px,
 			rgba(0, 0, 0, 0.3) 0px 7px 13px -3px,
 			rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+	}
+
+	.main-button:disabled {
+		background-color: #cccccc;
+		color: #999999;
+		border: 1px solid #cccccc;
+		cursor: not-allowed;
 	}
 
 	.login-button {
@@ -112,6 +173,12 @@
 			rgba(0, 0, 0, 0.3) 0px 7px 13px -3px,
 			rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
 		width: 100%;
+		transition: all 0.1s ease-in-out;
+		color: #333333;
+	}
+
+	input:focus {
+		transform: scale(1.05);
 	}
 
 	.side-button {

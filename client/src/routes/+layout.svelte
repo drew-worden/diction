@@ -1,4 +1,7 @@
 <script lang="ts">
+	// Import packages
+	import { Toaster } from "svelte-french-toast"
+
 	// Import components
 	import Sidebar from "../components/Sidebar.svelte"
 	import Selector from "../components/Selector.svelte"
@@ -12,6 +15,7 @@
 	<Selector />
 	<slot />
 </main>
+<Toaster />
 
 <style>
 	main {

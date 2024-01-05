@@ -83,6 +83,13 @@
 			rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
 	}
 
+	.main-button:disabled {
+		background-color: #cccccc;
+		color: #999999;
+		border: 1px solid #cccccc;
+		cursor: not-allowed;
+	}
+
 	.login-button {
 		background-color: #3793f6;
 		color: #ffffff;
@@ -130,6 +137,12 @@
 			rgba(0, 0, 0, 0.3) 0px 7px 13px -3px,
 			rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
 		width: 100%;
+		transition: all 0.1s ease-in-out;
+		color: #333333;
+	}
+
+	input:focus {
+		transform: scale(1.05);
 	}
 
 	.dual-input {
