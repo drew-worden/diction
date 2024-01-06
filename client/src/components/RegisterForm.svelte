@@ -9,7 +9,7 @@
 
 	// Props
 	export let handleForm: (form: "login" | "register" | "home") => void
-	
+
 	// State
 	let firstName = ""
 	let lastName = ""
@@ -37,11 +37,18 @@
 		errorField = null
 
 		// Validate form
-		const { valid, message, field } = validateRegisterForm(firstName, lastName, email, username, password, confirmPassword)
+		const { valid, message, field } = validateRegisterForm(
+			firstName,
+			lastName,
+			email,
+			username,
+			password,
+			confirmPassword
+		)
 		if (!valid) {
 			previousState = firstName + lastName + email + username + password + confirmPassword
-			
-			// If form is invalid, display error toast 
+
+			// If form is invalid, display error toast
 			toast.dismiss(toastId)
 			let adaptiveStyle = ""
 			if (message.length > 30) {
@@ -49,7 +56,9 @@
 			}
 			toastId = toast.error(message, {
 				position: "bottom-center",
-				style: "text-wrap: no-wrap; width: 100%; margin-left: 320px; margin-bottom: 200px; font-family: grand; color: #333333; border-radius: 1000px; padding: 8px 16px; box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;" + adaptiveStyle
+				style:
+					"text-wrap: no-wrap; width: 100%; margin-left: 320px; margin-bottom: 200px; font-family: grand; color: #333333; border-radius: 1000px; padding: 8px 16px; box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;" +
+					adaptiveStyle
 			})
 			if (field) {
 				errorField = field
@@ -57,7 +66,6 @@
 			return
 		}
 	}
-
 </script>
 
 <div
@@ -69,7 +77,8 @@
 		class="exit-wrapper clickable"
 		on:click="{() => {
 			toast.dismiss(toastId)
-			handleForm('home')}}"
+			handleForm('home')
+		}}"
 	>
 		<svg
 			width="16"
@@ -128,12 +137,18 @@
 			style:outline="{errorField === "confirmPassword" ? "solid 2px #FF4B4B" : null}"
 		/>
 	</div>
-	<button class="login-button main-button clickable" on:click="{() => handleSubmit()}" disabled="{disableButton}">Register</button>
+	<button
+		class="login-button main-button clickable"
+		on:click="{() => handleSubmit()}"
+		disabled="{disableButton}">Register</button
+	>
 	<span class="question"
 		>Already have an account? <button
 			class="side-button clickable"
-			on:click="{() => {toast.dismiss(toastId)
-				handleForm('login')}}">Login</button
+			on:click="{() => {
+				toast.dismiss(toastId)
+				handleForm('login')
+			}}">Login</button
 		></span
 	>
 </div>
