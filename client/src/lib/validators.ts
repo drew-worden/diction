@@ -13,8 +13,8 @@ function validateLoginForm(email: string, password: string): ValidatorMessage {
 function validateRegisterForm(
 	firstName: string,
 	lastName: string,
-	username: string,
 	email: string,
+	username: string,
 	password: string,
 	confirmPassword: string
 ): ValidatorMessage {
@@ -22,10 +22,10 @@ function validateRegisterForm(
 	if (!firstNameValidation.valid) return firstNameValidation
 	const lastNameValidation = validateLastName(lastName)
 	if (!lastNameValidation.valid) return lastNameValidation
-	const usernameValidation = validateUsername(username)
-	if (!usernameValidation.valid) return usernameValidation
 	const emailValidation = validateEmail(email)
 	if (!emailValidation.valid) return emailValidation
+	const usernameValidation = validateUsername(username)
+	if (!usernameValidation.valid) return usernameValidation
 	const passwordValidation = validateRegisterPassword(password)
 	if (!passwordValidation.valid) return passwordValidation
 	const confirmPasswordValidation = validateConfirmPassword(password, confirmPassword)

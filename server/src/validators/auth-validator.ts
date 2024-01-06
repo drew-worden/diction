@@ -57,13 +57,15 @@ const nameValidation = Joi.string().min(1).max(32).required().messages({
 	"string.min": "{#label} field should have a minimum length of {#limit}",
 	"string.max": "{#label} field should have a maximum length of {#limit}"
 })
-const confirmPasswordValidation = JoiPassword.string().valid(Joi.ref("password")).required().messages({
-	"any.required": "{#label} field is required",
-	"string.base": "{#label} field should be a string",
-	"string.empty": "{#label} field should not be empty",
-	"any.only": "{#label} field should match the password field"
-})
-
+const confirmPasswordValidation = JoiPassword.string()
+	.valid(Joi.ref("password"))
+	.required()
+	.messages({
+		"any.required": "{#label} field is required",
+		"string.base": "{#label} field should be a string",
+		"string.empty": "{#label} field should not be empty",
+		"any.only": "{#label} field should match the password field"
+	})
 
 // Validation schemas
 const registerSchema = Joi.object({

@@ -1,9 +1,63 @@
 <script lang="ts">
+	// Import packages
+	import toast from "svelte-french-toast"
+
 	// Import libraries
 	import { send, receive } from "../lib/index"
+	import { validateRegisterForm } from "../lib/validators"
+	import type { ValidatorFields } from "../types/validators"
 
 	// Props
 	export let handleForm: (form: "login" | "register" | "home") => void
+	
+	// State
+	let firstName = ""
+	let lastName = ""
+	let email = ""
+	let username = ""
+	let password = ""
+	let confirmPassword = ""
+	let toastId = ""
+	let disableButton = true
+	let errorField: ValidatorFields = null
+
+	// Compute previous state "hash"
+	let previousState = firstName + lastName + email + username + password + confirmPassword
+
+	// Disable button if previous state is the same as current state
+	$: if (previousState !== firstName + lastName + email + username + password + confirmPassword) {
+		disableButton = false
+	} else {
+		disableButton = true
+	}
+
+	// Handlers
+	function handleSubmit() {
+		// Reset error field
+		errorField = null
+
+		// Validate form
+		const { valid, message, field } = validateRegisterForm(firstName, lastName, email, username, password, confirmPassword)
+		if (!valid) {
+			previousState = firstName + lastName + email + username + password + confirmPassword
+			
+			// If form is invalid, display error toast 
+			toast.dismiss(toastId)
+			let adaptiveStyle = ""
+			if (message.length > 30) {
+				adaptiveStyle = "margin-bottom: 180px;"
+			}
+			toastId = toast.error(message, {
+				position: "bottom-center",
+				style: "text-wrap: no-wrap; width: 100%; margin-left: 320px; margin-bottom: 200px; font-family: grand; color: #333333; border-radius: 1000px; padding: 8px 16px; box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;" + adaptiveStyle
+			})
+			if (field) {
+				errorField = field
+			}
+			return
+		}
+	}
+
 </script>
 
 <div
@@ -13,7 +67,9 @@
 >
 	<button
 		class="exit-wrapper clickable"
-		on:click="{() => handleForm('home')}"
+		on:click="{() => {
+			toast.dismiss(toastId)
+			handleForm('home')}}"
 	>
 		<svg
 			width="16"
@@ -34,37 +90,50 @@
 		<input
 			type="text"
 			placeholder="First Name"
+			bind:value="{firstName}"
+			style:outline="{errorField === "firstName" ? "solid 2px #FF4B4B" : null}"
 		/>
 		<input
 			type="text"
 			placeholder="Last Name"
+			bind:value="{lastName}"
+			style:outline="{errorField === "lastName" ? "solid 2px #FF4B4B" : null}"
 		/>
 	</div>
 	<div class="dual-input">
 		<input
 			type="text"
 			placeholder="Email Address"
+			bind:value="{email}"
+			style:outline="{errorField === "email" ? "solid 2px #FF4B4B" : null}"
 		/>
 		<input
 			type="text"
 			placeholder="Username"
+			bind:value="{username}"
+			style:outline="{errorField === "username" ? "solid 2px #FF4B4B" : null}"
 		/>
 	</div>
 	<div class="dual-input">
 		<input
 			type="password"
 			placeholder="Password"
+			bind:value="{password}"
+			style:outline="{errorField === "password" ? "solid 2px #FF4B4B" : null}"
 		/>
 		<input
 			type="password"
 			placeholder="Confirm Password"
+			bind:value="{confirmPassword}"
+			style:outline="{errorField === "confirmPassword" ? "solid 2px #FF4B4B" : null}"
 		/>
 	</div>
-	<button class="login-button main-button clickable">Register</button>
+	<button class="login-button main-button clickable" on:click="{() => handleSubmit()}" disabled="{disableButton}">Register</button>
 	<span class="question"
 		>Already have an account? <button
 			class="side-button clickable"
-			on:click="{() => handleForm('login')}">Login</button
+			on:click="{() => {toast.dismiss(toastId)
+				handleForm('login')}}">Login</button
 		></span
 	>
 </div>

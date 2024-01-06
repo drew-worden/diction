@@ -19,8 +19,10 @@
 	let disableButton = true
 	let errorField: ValidatorFields = null
 
+	// Compute previous state "hash"
 	let previousState = email + password
 
+	// Disable button if previous state is the same as current state
 	$: if (previousState !== email + password) {
 		disableButton = false
 	} else {
@@ -29,10 +31,14 @@
 
 	// Handlers
 	function handleSubmit() {
+		// Reset error field
 		errorField = null
+
+		// Validate form
 		const { valid, message, field } = validateLoginForm(email, password)
 		if (!valid) {
 			previousState = email + password
+			// If form is invalid, display error toast
 			toast.dismiss(toastId)
 			toastId = toast.error(message, {
 				position: "bottom-center",

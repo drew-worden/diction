@@ -29,10 +29,6 @@
     "prepare": "husky install"
   },
   "devDependencies": {
-    "@types/bcrypt": "^5.0.2",
-    "@types/joi": "^17.2.3",
-    "@types/jsonwebtoken": "^9.0.5",
-    "@types/node": "^20.10.6",
     "husky": "^8.0.3"
   }
 }
